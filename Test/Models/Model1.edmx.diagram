@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3c0b11f660d34b8fb6846cc5db7f80ca" Name="Diagram1">
+        <EntityTypeShape EntityType="Web_ProjectsModel.Project" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="Web_ProjectsModel.Resource" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Web_ProjectsModel.Task" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Web_ProjectsModel.TeamMember" Width="1.5" PointX="8.125" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="Web_ProjectsModel.FK_Tasks_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="Web_ProjectsModel.FK_Tasks_TeamMember" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

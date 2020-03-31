@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Web_ProjectsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProjectName" Type="nvarchar(max)" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="255" />
+          <Property Name="Status" Type="nvarchar(max)" />
+          <Property Name="Project_Deliverable" Type="nvarchar(max)" />
+          <Property Name="Supported_Document" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Resource">
+          <Key>
+            <PropertyRef Name="Resouce_ID" />
+          </Key>
+          <Property Name="Resouce_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Resource_Name" Type="nvarchar(max)" />
+          <Property Name="TeamMemberID" Type="int" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="ProjectID" Type="int" Nullable="false" />
+          <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectName" Type="nvarchar(max)" />
+          <Property Name="TaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskName" Type="nvarchar(max)" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="ResourceID" Type="int" Nullable="false" />
+          <Property Name="TeamMemberID" Type="int" Nullable="false" />
+          <Property Name="PercentageCompleted" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="DateLastUpdated" Type="datetime" />
+          <Property Name="HelpDesk_Number1" Type="nvarchar(max)" />
+          <Property Name="HelpDesk_Number2" Type="nvarchar(max)" />
+          <Property Name="HelpDesk_Number3" Type="nvarchar(max)" />
+          <Property Name="HelpDesk_Number4" Type="nvarchar(max)" />
+          <Property Name="HelpDesk_Number5" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="255" />
+          <Property Name="Status" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="TeamMember">
+          <Key>
+            <PropertyRef Name="TeamMemberID" />
+          </Key>
+          <Property Name="TeamMemberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamMember" Type="nvarchar(max)" />
+          <Property Name="ResourceID" Type="int" />
+          <Property Name="JobRole" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Tasks_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_TeamMember">
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMember">
+              <PropertyRef Name="TeamMemberID" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="TeamMemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Web_ProjectsModelStoreContainer">
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resource" EntityType="Self.Resource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamMember" EntityType="Self.TeamMember" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Tasks_Projects" Association="Self.FK_Tasks_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_TeamMember" Association="Self.FK_Tasks_TeamMember">
+            <End Role="TeamMember" EntitySet="TeamMember" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Web_ProjectsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProjectName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Project_Deliverable" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Supported_Document" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_Projects" FromRole="Projects" ToRole="Tasks" />
+        </EntityType>
+        <EntityType Name="Resource">
+          <Key>
+            <PropertyRef Name="Resouce_ID" />
+          </Key>
+          <Property Name="Resouce_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Resource_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TeamMemberID" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
+          <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TaskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="ResourceID" Type="Int32" Nullable="false" />
+          <Property Name="TeamMemberID" Type="Int32" Nullable="false" />
+          <Property Name="PercentageCompleted" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="HelpDesk_Number1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HelpDesk_Number2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HelpDesk_Number3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HelpDesk_Number4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HelpDesk_Number5" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Project" Relationship="Self.FK_Tasks_Projects" FromRole="Tasks" ToRole="Projects" />
+          <NavigationProperty Name="TeamMember" Relationship="Self.FK_Tasks_TeamMember" FromRole="Tasks" ToRole="TeamMember" />
+        </EntityType>
+        <EntityType Name="TeamMember">
+          <Key>
+            <PropertyRef Name="TeamMemberID" />
+          </Key>
+          <Property Name="TeamMemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamMember1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ResourceID" Type="Int32" />
+          <Property Name="JobRole" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_TeamMember" FromRole="TeamMember" ToRole="Tasks" />
+        </EntityType>
+        <Association Name="FK_Tasks_Projects">
+          <End Role="Projects" Type="Self.Project" Multiplicity="1" />
+          <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_TeamMember">
+          <End Role="TeamMember" Type="Self.TeamMember" Multiplicity="1" />
+          <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamMember">
+              <PropertyRef Name="TeamMemberID" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="TeamMemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Web_ProjectsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="Resources" EntityType="Self.Resource" />
+          <EntitySet Name="Tasks" EntityType="Self.Task" />
+          <EntitySet Name="TeamMembers" EntityType="Self.TeamMember" />
+          <AssociationSet Name="FK_Tasks_Projects" Association="Self.FK_Tasks_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_TeamMember" Association="Self.FK_Tasks_TeamMember">
+            <End Role="TeamMember" EntitySet="TeamMembers" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Web_ProjectsModelStoreContainer" CdmEntityContainer="Web_ProjectsEntities">
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="Web_ProjectsModel.Project">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Project_Deliverable" ColumnName="Project_Deliverable" />
+                <ScalarProperty Name="Supported_Document" ColumnName="Supported_Document" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resources">
+            <EntityTypeMapping TypeName="Web_ProjectsModel.Resource">
+              <MappingFragment StoreEntitySet="Resource">
+                <ScalarProperty Name="Resouce_ID" ColumnName="Resouce_ID" />
+                <ScalarProperty Name="Resource_Name" ColumnName="Resource_Name" />
+                <ScalarProperty Name="TeamMemberID" ColumnName="TeamMemberID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="Web_ProjectsModel.Task">
+              <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
+                <ScalarProperty Name="TeamMemberID" ColumnName="TeamMemberID" />
+                <ScalarProperty Name="PercentageCompleted" ColumnName="PercentageCompleted" />
+                <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+                <ScalarProperty Name="HelpDesk_Number1" ColumnName="HelpDesk_Number1" />
+                <ScalarProperty Name="HelpDesk_Number2" ColumnName="HelpDesk_Number2" />
+                <ScalarProperty Name="HelpDesk_Number3" ColumnName="HelpDesk_Number3" />
+                <ScalarProperty Name="HelpDesk_Number4" ColumnName="HelpDesk_Number4" />
+                <ScalarProperty Name="HelpDesk_Number5" ColumnName="HelpDesk_Number5" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamMembers">
+            <EntityTypeMapping TypeName="Web_ProjectsModel.TeamMember">
+              <MappingFragment StoreEntitySet="TeamMember">
+                <ScalarProperty Name="TeamMemberID" ColumnName="TeamMemberID" />
+                <ScalarProperty Name="TeamMember1" ColumnName="TeamMember" />
+                <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
+                <ScalarProperty Name="JobRole" ColumnName="JobRole" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
